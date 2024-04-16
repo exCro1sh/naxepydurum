@@ -1,7 +1,6 @@
 import discord
 import platform
 from os import system
-from colorama import Fore, Style
 
 intents = discord.Intents.default()
 intents.typing = True
@@ -85,18 +84,6 @@ if os == "Windows":
     system("cls")
 else:
     system("clear")
-    print(chr(27) + "[2J")
-
-def print_header():
-    print("" * 60)
-    print("" * 60)
-    print(f"\033[38;2;255;0;0m{' '*37}███╗  ██╗ █████╗ ██╗  ██╗███████╗")
-    print(f"\033[38;2;255;0;0m{' '*37}████╗ ██║██╔══██╗╚██╗██╔╝██╔════╝")
-    print(f"\033[38;2;255;0;0m{' '*37}██╔██╗██║███████║ ╚███╔╝ █████╗  ")
-    print(f"\033[38;2;255;0;0m{' '*37}██║╚████║██╔══██║ ██╔██╗ ██╔══╝   ")
-    print(f"\033[38;2;255;0;0m{' '*37}██║ ╚███║██║  ██║██╔╝╚██╗███████╗")
-    print(f"\033[38;2;255;0;0m{' '*37}╚═╝╚══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝")
-    print(f"{Style.RESET_ALL}")
 
 async def create_channel(guild, channel_name, channel_count):
     for i in range(channel_count):
@@ -111,18 +98,18 @@ async def change_server_name(guild, new_name):
 
 async def delete_all_channels(guild):
     deleted_channels, not_deleted_channels = await delete_channels(guild)
-    print("\033[38;2;255;0;0mSilinen kanallar:")
+    print("Silinen kanallar:")
     print('\n'.join(deleted_channels))
     if not_deleted_channels:
-        print("\033[38;2;255;0;0mSilinmeyen kanallar:")
+        print("Silinmeyen kanallar:")
         print('\n'.join(not_deleted_channels))
 
 async def delete_all_roles(guild):
     deleted_roles, not_deleted_roles = await delete_roles(guild)
-    print("\033[38;2;255;0;0mSilinen roller:")
+    print("Silinen roller:")
     print('\n'.join(deleted_roles))
     if not_deleted_roles:
-        print("\033[38;2;255;0;0mSilinmeyen roller:")
+        print("Silinmeyen roller:")
         print('\n'.join(not_deleted_roles))
 
 async def webhook_spam(guild, message):
@@ -152,8 +139,7 @@ async def on_ready():
     print('Bot hazır.')
     while True:
         clear_console()
-        print_header()
-        print("                                 \033[38;2;255;0;0mMade İn Naxe                  Hydronix & LuX")
+        print("Made İn Naxe                  Hydronix & LuX")
         print("\n")
         print("                     (1) Kanal Oluştur                         (5) Tüm Kanalları Sil")
         print("                     (2) Rol Oluştur                           (6) Tüm Rolleri Sil")
@@ -161,10 +147,10 @@ async def on_ready():
         print("                     (4) Sunucu Adı Değiştir                   (8) Webhook Spam")
         print("                                                               (9) Üyeleri Kaydet")
         print("\n")
-        print('                                          \033[38;2;255;0;0m Bot Durumu [GÖRÜNMEZ] ')
+        print(' Bot Durumu [GÖRÜNMEZ] ')
         print("\n")
 
-        choice = input("                                 \033[38;2;255;0;0mSeçiminizi yapın (0 ana menüye dön): ")
+        choice = input("Seçiminizi yapın (0 ana menüye dön): ")
 
         guild = bot.get_guild(int(sunucu_id))
 
@@ -196,9 +182,8 @@ async def on_ready():
             await save_members(guild)
 
 # Ana program başlangıcı
-print_header()
-print("                                 \033[38;2;255;0;0mMade İn Naxe                  Hydronix & LuX")
-token = input('\033[38;2;255;0;0m [NAXE] Bot TOKEN Girin: ')
-sunucu_id = input('\033[38;2;255;0;0m [NAXE] Sunucu ID girin: ')
+print("Made İn Naxe                  Hydronix & LuX")
+token = input('[NAXE] Bot TOKEN Girin: ')
+sunucu_id = input('[NAXE] Sunucu ID girin: ')
 
 bot.run(token)
