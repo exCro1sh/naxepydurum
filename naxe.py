@@ -1,7 +1,6 @@
 import discord
 import platform
 from os import system
-from colorama import Fore, Style
 import requests
 
 intents = discord.Intents.default()
@@ -69,19 +68,6 @@ async def kick_all_members(guild):
             not_kicked_members.append(member.name + " (atılamadı - yetki eksik)")
     return kicked_members, not_kicked_members
 
-async def check_bot_role_position(guild):
-    bot_member = guild.me
-    bot_role = bot_member.top_role  # Botun en yüksek rolünü alın
-    roles = guild.roles  # Sunucudaki tüm rolleri alın
-
-    # Botun rolünün pozisyonunu diğer rollerle karşılaştırın
-    for role in roles:
-        if role.position > bot_role.position:
-            print(f"{role.name} rolü, botun rolünden daha üstte.")
-            return False
-    print("Botun rolü en üst sırada.")
-    return True
-
 async def save_members(guild):
     with open("uyeler.txt", "w") as file:
         for member in guild.members:
@@ -96,67 +82,16 @@ else:
     system("clear")
     print(chr(27) + "[2J")
 
-def print_header():
-    print("" * 60)
-    print("" * 60)
-    print(f"\033[38;2;255;0;0m{' '*37}███╗  ██╗ █████╗ ██╗  ██╗███████╗")
-    print(f"\033[38;2;255;0;0m{' '*37}████╗ ██║██╔══██╗╚██╗██╔╝██╔════╝")
-    print(f"\033[38;2;255;0;0m{' '*37}██╔██╗██║███████║ ╚███╔╝ █████╗  ")
-    print(f"\033[38;2;255;0;0m{' '*37}██║╚████║██╔══██║ ██╔██╗ ██╔══╝   ")
-    print(f"\033[38;2;255;0;0m{' '*37}██║ ╚███║██║  ██║██╔╝╚██╗███████╗")
-    print(f"\033[38;2;255;0;0m{' '*37}╚═╝  ╚══╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝")
-    print(f"{Style.RESET_ALL}")
+async def run_naxe():
+    print("                                 \033[38;2;255;0;0mMade İn Naxe                  Hydronix & LuX")
+    token = input('\033[38;2;255;0;0m [NAXE] Bot TOKEN Girin: ')
+    sunucu_id = input('\033[38;2;255;0;0m [NAXE] Sunucu ID girin: ')
 
-async def create_channel(guild, channel_name, channel_count):
-    for i in range(channel_count):
-        await guild.create_text_channel(channel_name + str(i+1))
+    bot.run(token)
 
-async def create_role(guild, role_name, role_count):
-    for i in range(role_count):
-        await guild.create_role(name=role_name + str(i+1))
-
-async def change_server_name(guild, new_name):
-    await guild.edit(name=new_name)
-
-async def delete_all_channels(guild):
-    deleted_channels, not_deleted_channels = await delete_channels(guild)
-    print("\033[38;2;255;0;0mSilinen kanallar:")
-    print('\n'.join(deleted_channels))
-    if not_deleted_channels:
-        print("\033[38;2;255;0;0mSilinmeyen kanallar:")
-        print('\n'.join(not_deleted_channels))
-
-async def delete_all_roles(guild):
-    deleted_roles, not_deleted_roles = await delete_roles(guild)
-    print("\033[38;2;255;0;0mSilinen roller:")
-    print('\n'.join(deleted_roles))
-    if not_deleted_roles:
-        print("\033[38;2;255;0;0mSilinmeyen roller:")
-        print('\n'.join(not_deleted_roles))
-
-async def webhook_spam(guild, message):
-    for channel in guild.channels:
-        if isinstance(channel, discord.TextChannel):
-            try:
-                webhook = await channel.create_webhook(name="Webhook")
-                await webhook.send(message)
-            except discord.Forbidden:
-                print(f"{channel.name} kanalında webhook oluştururken yetkim yetmiyor.")
-            except discord.HTTPException as e:
-                print(f"{channel.name} kanalında webhook oluşturulurken bir hata oluştu: {e}")
-
-def clear_console():
-    if os == "Windows":
-        system("cls")
-    else:
-        system("clear")
-
-@bot.event
 async def on_connect():
     print('Bağlanılıyor...')
-    clear_console()
 
-@bot.event
 async def on_ready():
     print('Bot hazır.')
     if not durum_kontrol():
@@ -164,8 +99,7 @@ async def on_ready():
         return
     while True:
         # Ana menü ve diğer işlemler devam eder...
-        clear_console()
-        print_header()
+        print("\n")
         print("                                 \033[38;2;255;0;0mMade İn Naxe                  Hydronix & LuX")
         print("\n")
         print("                     (1) Kanal Oluştur                         (5) Tüm Kanalları Sil")
@@ -208,10 +142,4 @@ async def on_ready():
         elif choice == "9":
             await save_members(guild)
 
-# Ana program başlangıcı
-print_header()
-print("                                 \033[38;2;255;0;0mMade İn Naxe                  Hydronix & LuX")
-token = input('\033[38;2;255;0;0m [NAXE] Bot TOKEN Girin: ')
-sunucu_id = input('\033[38;2;255;0;0m [NAXE] Sunucu ID girin: ')
-
-bot.run(token)
+await run_naxe()
